@@ -1,0 +1,8 @@
+Material tileWall : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        DiffuseMap : Textures/348-diffuse.tga
+        NormalMap : Textures/348-normal.tga
+     }
+    AdditionalRenderState {
+    }
+}
