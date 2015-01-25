@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+    TODO define vocabulary identification
+    PUBLIC ID: -//vendor//vocabulary//EN
+    SYSTEM ID: http://server/path/map.dtd
+
+-->
+
+<!--
+    An example how to use this DTD from your XML document:
+
+    <?xml version="1.0"?>
+
+    <!DOCTYPE map SYSTEM "map.dtd">
+
+    <map>
+    ...
+    </map>
+-->
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT map (layer|tileset)*>
+<!ATTLIST map
+    tileheight CDATA #IMPLIED
+    tilewidth CDATA #IMPLIED
+    height CDATA #IMPLIED
+    width CDATA #IMPLIED
+    orientation CDATA #IMPLIED
+    version CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT tileset (image)*>
+<!ATTLIST tileset
+    tileheight CDATA #IMPLIED
+    tilewidth CDATA #IMPLIED
+    name CDATA #IMPLIED
+    firstgid CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT image EMPTY>
+<!ATTLIST image
+    height CDATA #IMPLIED
+    width CDATA #IMPLIED
+    source CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT layer (data)*>
+<!ATTLIST layer
+    height CDATA #IMPLIED
+    width CDATA #IMPLIED
+    name CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT data (tile)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT tile EMPTY>
+<!ATTLIST tile
+    gid CDATA #IMPLIED
+  >
