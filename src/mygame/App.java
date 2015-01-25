@@ -6,6 +6,7 @@ import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
+import com.jme3.scene.Node;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -40,7 +41,10 @@ public class App extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        flyCam.setMoveSpeed(10f);
+        flyCam.setEnabled(false);
+        Node playerNode = new Node("Player");
+        GameCharacterControl charControl = new GameCharacterControl(0.25f, 0.25f, 8f);
+        
         /**
          * A white ambient light source.
          */
@@ -55,6 +59,7 @@ public class App extends SimpleApplication {
         sun.setDirection((new Vector3f(-0.5f, -0.5f, -0.5f)).normalizeLocal());
         sun.setColor(ColorRGBA.White);
         rootNode.addLight(sun);
+        
         try {
             File file = new File("/home/shazzner/Dev/DungeonTest/assets/Interface/map_purple.tmx");
             JAXBContext jaxbContext = JAXBContext.newInstance(Map.class);

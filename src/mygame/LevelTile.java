@@ -53,12 +53,9 @@ public class LevelTile {
         mat.setTexture("DiffuseMap", App.getInstance().getAssetManager().loadTexture("Textures/348-diffuse.tga"));
         mat.setTexture("NormalMap", App.getInstance().getAssetManager().loadTexture("Textures/348-normal.tga"));
 
+        /* Floor */
         Quad qf = new Quad(WALLSIZE, WALLSIZE, false);
-
-        //Box b = new Box(0.5f, 0.5f, 0.5f);
         Geometry geomfl = new Geometry("Quadfloor", qf);
-
-
         geomfl.setMaterial(mat);
         geomfl.setLocalRotation(new Quaternion().fromAngleAxis((FastMath.PI * 3 / 2), new Vector3f(1, 0, 0)));
         geomfl.setLocalTranslation(0, 0, WALLSIZE);
@@ -127,6 +124,14 @@ public class LevelTile {
             }
             break;
         }
+        
+        /* Ceiling */
+        Quad qc = new Quad(WALLSIZE, WALLSIZE, false);
+        Geometry geomcl = new Geometry("Quadceiling", qc);
+        geomcl.setMaterial(mat);
+        geomcl.setLocalRotation(new Quaternion().fromAngleAxis((FastMath.PI / 2), new Vector3f(1, 0, 0)));
+        geomcl.setLocalTranslation(0, WALLSIZE, 0);
+        wall.attachChild(geomcl);
 
         wall.setLocalTranslation(this.getLocation());
         return wall;
