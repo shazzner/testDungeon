@@ -18,13 +18,13 @@ import com.jme3.scene.shape.Quad;
  *
  * @author shazzner
  */
-public class Tile {
+public class LevelTile {
 
     private Vector3f location;
     private int tileType;
     private static int WALLSIZE = 1;
 
-    public Tile(Vector3f location, int tileType) {
+    public LevelTile(Vector3f location, int tileType) {
         this.location = location;
         this.tileType = tileType;
     }
