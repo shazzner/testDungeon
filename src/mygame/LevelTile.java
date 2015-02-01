@@ -11,7 +11,6 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Quad;
 
 /**
@@ -21,11 +20,17 @@ import com.jme3.scene.shape.Quad;
 public class LevelTile {
 
     private Vector3f location;
-    private int tileType;
+    private int tileType, tileID;
+    private boolean northWall, westWall, southWall, eastWall;
 
-    public LevelTile(Vector3f location, int tileType) {
+    public LevelTile(Vector3f location, int tileType, boolean northWall, boolean westWall, boolean southWall, boolean eastWall, int tileID) {
         this.location = location;
         this.tileType = tileType;
+        this.northWall = northWall;
+        this.westWall = westWall;
+        this.southWall = southWall;
+        this.eastWall = eastWall;
+        this.tileID = tileID;
     }
 
     public Vector3f getLocation() {
@@ -44,6 +49,14 @@ public class LevelTile {
         this.tileType = tileType;
     }
 
+    public int getTileID() {
+        return tileID;
+    }
+
+    public void setTileID(int tileID) {
+        this.tileID = tileID;
+    }
+
     public Spatial makeWall() {
         Node wall = new Node();
 
@@ -59,71 +72,18 @@ public class LevelTile {
         geomfl.setLocalRotation(new Quaternion().fromAngleAxis((FastMath.PI * 3 / 2), new Vector3f(1, 0, 0)));
         geomfl.setLocalTranslation(0, 0, App.WALLSIZE);
         wall.attachChild(geomfl);
-
-        switch (tileType) {
-
-            case 1: {
-                wall.attachChild(wallOne(mat));
-            }
-            break;
-            case 2: {
-                wall.attachChild(wallOne(mat));
-                wall.attachChild(wallTwo(mat));
-            }
-            break;
-            case 3: {
-                wall.attachChild(wallOne(mat));
-                wall.attachChild(wallTwo(mat));
-                wall.attachChild(wallFour(mat));
-            }
-            break;
-            case 4: {
-                wall.attachChild(wallTwo(mat));
-            }
-            break;
-            case 5: {
-                wall.attachChild(wallTwo(mat));
-                wall.attachChild(wallThree(mat));
-            }
-            break;
-            case 6: {
-                wall.attachChild(wallOne(mat));
-                wall.attachChild(wallTwo(mat));
-                wall.attachChild(wallThree(mat));
-            }
-            break;
-            case 7: {
-                wall.attachChild(wallThree(mat));
-            }
-            break;
-            case 8: {
-                wall.attachChild(wallThree(mat));
-                wall.attachChild(wallFour(mat));
-            }
-            break;
-            case 9: {
-                wall.attachChild(wallTwo(mat));
-                wall.attachChild(wallThree(mat));
-                wall.attachChild(wallFour(mat));
-            }
-            break;
-            case 10: {
-                wall.attachChild(wallFour(mat));
-            }
-            break;
-            case 11: {
-                wall.attachChild(wallOne(mat));
-                wall.attachChild(wallFour(mat));
-            }
-            break;
-            case 12: {
-                wall.attachChild(wallOne(mat));
-                wall.attachChild(wallThree(mat));
-                wall.attachChild(wallFour(mat));
-            }
-            break;
+        if (northWall) {
+            wall.attachChild(wallOne(mat));
         }
-        
+        if (westWall) {
+            wall.attachChild(wallTwo(mat));
+        }
+        if (southWall) {
+            wall.attachChild(wallThree(mat));
+        }
+        if (eastWall) {
+            wall.attachChild(wallFour(mat));
+        }
         /* Ceiling */
         Quad qc = new Quad(App.WALLSIZE, App.WALLSIZE, false);
         Geometry geomcl = new Geometry("Quadceiling", qc);
@@ -168,5 +128,12 @@ public class LevelTile {
         geom3.setLocalRotation(new Quaternion().fromAngleAxis((FastMath.PI * 3 / 2), new Vector3f(0, 1, 0)));
         geom3.setLocalTranslation(App.WALLSIZE, 0, 0);
         return geom3;
+    }
+    
+    public Vector3f getTileCenter() {
+        Vector3f tileCenter = App.getInstance().getTiles().get(this.tileID).getLocation();
+        tileCenter = tileCenter.add(App.WALLSIZE / 2 , App.WALLSIZE / 2, App.WALLSIZE / 2);
+        return tileCenter;
+        
     }
 }

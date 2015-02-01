@@ -73,6 +73,9 @@ public class GameCharacterControl extends BetterCharacterControl
                 rightRotate = isPressed;
                 rotateCamera(-tpf, cam.getUp());
             }
+            //App.getInstance().getHelloText().setText("Cam " + cam.getRotation());
+            App.getInstance().getHelloText().setText("Cam: " + cam.getLocation() + " Rotation: " + cam.getRotation() + " CurrentTileID: " + App.getInstance().getParty().getLevelID());
+
         }
     }
 
@@ -96,27 +99,48 @@ public class GameCharacterControl extends BetterCharacterControl
     }
 
     protected void moveCamera(float value, boolean sideways) {
-        System.out.println("value " + value + " sideways " + sideways);
+        
         Vector3f vel = new Vector3f();
         Vector3f pos = cam.getLocation().clone();
+        
+        Party party = App.getInstance().getParty();
 
+        
+        
         if (sideways) {
             cam.getLeft(vel);
+            if (value > 0) {
+                vel.multLocal(App.WALLSIZE);
+            } else {
+                vel.multLocal(-App.WALLSIZE);
+            }
         } else {
             cam.getDirection(vel);
+            if (value > 0) {
+                vel.multLocal(App.WALLSIZE);
+            } else {
+                vel.multLocal(-App.WALLSIZE);
+            }
         }
-        vel.multLocal(value * moveSpeed);
+        //vel.multLocal(value * moveSpeed);
 
         pos.addLocal(vel);
 
         cam.setLocation(pos);
+        
+        
     }
 
     protected void rotateCamera(float value, Vector3f axis) {
 
 
         Matrix3f mat = new Matrix3f();
-        mat.fromAngleNormalAxis(FastMath.PI / 2, axis);
+        if (value > 0) {
+            mat.fromAngleNormalAxis(FastMath.PI / 2, axis);
+        } else {
+            mat.fromAngleNormalAxis(-FastMath.PI / 2, axis);
+        }
+        
 
         Vector3f up = cam.getUp();
         Vector3f left = cam.getLeft();
